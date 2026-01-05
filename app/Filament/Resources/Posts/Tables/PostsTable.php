@@ -19,13 +19,15 @@ class PostsTable
     {
         return $table
             ->columns([
-                TextColumn::make('title'),
-                TextColumn::make('slug'),
-                TextColumn::make('category.name'),
+                TextColumn::make('id')->label('#ID')->sortable()->searchable()->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('title')->sortable()->searchable(),
+                TextColumn::make('slug')->sortable()->searchable(),
+                TextColumn::make('category.name')->sortable()->searchable(),
                 ImageColumn::make('thumbnail')
                     ->disk('public')->circular(),
-                ToggleColumn::make('published'),
+                ToggleColumn::make('published')->sortable()->toggleable(),
             ])
+            ->searchOnBlur(true)
             ->filters([
                 //
             ])
