@@ -32,15 +32,18 @@ class UserResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->maxLength(255)
+                    ->minLength(3),
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
+                    ->unique(User::class, 'email', ignoreRecord: true)
                     ->required(),
-                DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
                     ->password()
-                    ->required(),
+                    ->minLength(8)
+                    ->required(fn (string $context): bool => $context === 'create'),
             ]);
     }
 
